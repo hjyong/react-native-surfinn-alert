@@ -1,28 +1,27 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "esnext",
+    "lib": ["dom", "esnext"],
+    "jsx": "react-native",
     "moduleResolution": "node",
-    "outDir": "dist",
-    "rootDir": "src",
-    "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "types": ["jest"],
+    "typeRoots": [
+      "./ts-declarations",
+      "node_modules/@types"
+    ],
+    "sourceMap": true,
     "declaration": true,
-    "jsx": "react",
-    "lib": ["dom", "es2017"]
+    "declarationMap": true,
+    "inlineSources": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "strictFunctionTypes": true,
+    "skipLibCheck": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "outDir": "dist"
   },
-  "files": [
-    "src/index.ts",
-    "src/Alert.context.tsx",
-    "src/Alert.tsx",
-    "src/Alert.view.tsx"
-  ]
+  "include": ["./src"],
+  "exclude": ["**/__mocks__/*", "**/__tests__/*", "**/__stories__/*"]  
 }

@@ -5,3 +5,4 @@ export interface IAlertProps {
     backdropOpacity?: number;
 }
 export declare const Alert: import("react").ForwardRefExoticComponent<IAlertProps & import("react").RefAttributes<unknown>>;
+//# sourceMappingURL=Alert.d.ts.map

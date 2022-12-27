@@ -1,7 +1,9 @@
 {
   "name": "react-native-surfinn-alert",
-  "version": "0.0.8",
+  "version": "0.0.15",
   "description": "React Native Surfinn Alert",
+  "author": "Hyeong Jin Yong <gilseonappa@gmail.com>",
+  "license": "MIT",
   "keywords": [
     "react-native",
     "surfinn",

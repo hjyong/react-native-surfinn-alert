@@ -20,3 +20,4 @@ export interface IAlertProviderProps {
 }
 export declare const AlertProvider: ({ children }: IAlertProviderProps) => JSX.Element;
 export {};
+//# sourceMappingURL=Alert.context.d.ts.map

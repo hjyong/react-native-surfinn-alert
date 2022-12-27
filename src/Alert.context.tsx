@@ -45,6 +45,7 @@ const reducer = (state: any, action: any) => {
         return [
           ...state.filter((_alert: IAlertState) => _alert.id !== action.id),
           {
+            // @ts-ignore
             ...alert,
             show: true,
           },
@@ -59,6 +60,7 @@ const reducer = (state: any, action: any) => {
         return [
           ...state.filter((_alert: IAlertState) => _alert.id !== action.id),
           {
+            // @ts-ignore
             ...alert,
             show: false,
           },

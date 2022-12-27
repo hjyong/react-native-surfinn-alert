@@ -1,61 +1,13 @@
-"use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AlertProvider = exports.useAlert = exports.AlertContext = void 0;
-var react_1 = __importStar(require("react"));
-var Alert_view_1 = require("./Alert.view");
-var surfinn_uuid_1 = __importDefault(require("surfinn-uuid"));
-var initialAlerts = [];
-var reducer = function (state, action) {
-    var alert = null;
+import React, { createContext, useCallback, useContext, useMemo, useReducer, } from 'react';
+import { AlertView } from './Alert.view';
+import uuid from 'surfinn-uuid';
+const initialAlerts = [];
+const reducer = (state, action) => {
+    let alert = null;
     switch (action.type) {
         case 'ADD':
-            return __spreadArray(__spreadArray([], state, true), [
+            return [
+                ...state,
                 {
                     id: action.id,
                     show: false,
@@ -63,25 +15,35 @@ var reducer = function (state, action) {
                     backdrop: action.backdrop,
                     backdropOpacity: action.backdropOpacity,
                 },
-            ], false);
+            ];
         case 'REMOVE':
-            return state.filter(function (_alert) { return _alert.id !== action.id; });
+            return state.filter((_alert) => _alert.id !== action.id);
         case 'OPEN':
-            alert = state.find(function (_alert) { return _alert.id === action.id; });
+            alert = state.find((_alert) => _alert.id === action.id);
             if (alert) {
-                return __spreadArray(__spreadArray([], state.filter(function (_alert) { return _alert.id !== action.id; }), true), [
-                    __assign(__assign({}, alert), { show: true }),
-                ], false);
+                return [
+                    ...state.filter((_alert) => _alert.id !== action.id),
+                    {
+                        // @ts-ignore
+                        ...alert,
+                        show: true,
+                    },
+                ];
             }
             else {
                 return state;
             }
         case 'CLOSE':
-            alert = state.find(function (_alert) { return _alert.id === action.id; });
+            alert = state.find((_alert) => _alert.id === action.id);
             if (alert) {
-                return __spreadArray(__spreadArray([], state.filter(function (_alert) { return _alert.id !== action.id; }), true), [
-                    __assign(__assign({}, alert), { show: false }),
-                ], false);
+                return [
+                    ...state.filter((_alert) => _alert.id !== action.id),
+                    {
+                        // @ts-ignore
+                        ...alert,
+                        show: false,
+                    },
+                ];
             }
             else {
                 return state;
@@ -90,39 +52,40 @@ var reducer = function (state, action) {
             return state;
     }
 };
-exports.AlertContext = (0, react_1.createContext)(null);
-var useAlert = function () { return (0, react_1.useContext)(exports.AlertContext); };
-exports.useAlert = useAlert;
-var AlertProvider = function (_a) {
-    var children = _a.children;
-    var _b = (0, react_1.useReducer)(reducer, initialAlerts), alerts = _b[0], dispatch = _b[1];
-    var add = (0, react_1.useCallback)(function (state) {
+export const AlertContext = createContext(null);
+export const useAlert = () => useContext(AlertContext);
+export const AlertProvider = ({ children }) => {
+    const [alerts, dispatch] = useReducer(reducer, initialAlerts);
+    const add = useCallback((state) => {
         console.log('Alert.context add', state);
-        var id = surfinn_uuid_1.default.v4();
-        dispatch(__assign(__assign({ type: 'ADD' }, state), { id: id }));
+        const id = uuid.v4();
+        dispatch({ type: 'ADD', ...state, id });
         return id;
     }, []);
-    var remove = (0, react_1.useCallback)(function (id) {
-        dispatch({ type: 'REMOVE', id: id });
+    const remove = useCallback((id) => {
+        dispatch({ type: 'REMOVE', id });
     }, []);
-    var open = (0, react_1.useCallback)(function (id) {
-        dispatch({ type: 'OPEN', id: id });
+    const open = useCallback((id) => {
+        dispatch({ type: 'OPEN', id });
     }, []);
-    var close = (0, react_1.useCallback)(function (id) {
-        dispatch({ type: 'CLOSE', id: id });
+    const close = useCallback((id) => {
+        dispatch({ type: 'CLOSE', id });
     }, []);
-    var context = (0, react_1.useMemo)(function () { return ({
-        add: add,
-        remove: remove,
-        open: open,
-        close: close,
-    }); }, [add, remove, open, close]);
-    return (react_1.default.createElement(exports.AlertContext.Provider, { value: context },
-        children,
-        alerts
-            .filter(function (alert) { return alert.show; })
-            .map(function (alert) {
-            return (react_1.default.createElement(Alert_view_1.AlertView, { key: alert.id, backdrop: alert.backdrop, backdropOpacity: alert.backdropOpacity }, alert.children));
-        })));
+    const context = useMemo(() => ({
+        add,
+        remove,
+        open,
+        close,
+    }), [add, remove, open, close]);
+    return (<AlertContext.Provider value={context}>
+      {children}
+      {alerts
+            .filter((alert) => alert.show)
+            .map((alert) => {
+            return (<AlertView key={alert.id} backdrop={alert.backdrop} backdropOpacity={alert.backdropOpacity}>
+              {alert.children}
+            </AlertView>);
+        })}
+    </AlertContext.Provider>);
 };
-exports.AlertProvider = AlertProvider;
+//# sourceMappingURL=Alert.context.js.map
