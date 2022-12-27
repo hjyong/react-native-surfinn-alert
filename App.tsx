@@ -27,7 +27,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {Alert} from './src/Alert';
+import {Alert, AlertReturnType} from './src/Alert';
 import {AlertProvider} from './src/Alert.context';
 
 const Section: React.FC<
@@ -67,9 +67,9 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const alertRef1 = React.useRef<any>();
-  const alertRef2 = React.useRef<any>();
-  const alertRef3 = React.useRef<any>();
+  const alertRef1 = React.useRef<AlertReturnType>();
+  const alertRef2 = React.useRef<AlertReturnType>();
+  const alertRef3 = React.useRef<AlertReturnType>();
 
   useEffect(() => {
     setTimeout(() => {

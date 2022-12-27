@@ -1,6 +1,6 @@
 {
   "name": "react-native-surfinn-alert",
-  "version": "0.0.15",
+  "version": "0.0.24",
   "description": "React Native Surfinn Alert",
   "author": "Hyeong Jin Yong <gilseonappa@gmail.com>",
   "license": "MIT",
@@ -35,11 +35,13 @@
   "dependencies": {
     "surfinn-uuid": "^1.0.2"
   },
+  "peerDependencies": {
+    "react-native-reanimated": "^2.13.0"
+  },
   "devDependencies": {
     "react": "18.1.0",
     "react-native": "0.70.6",
     "react-native-get-random-values": "^1.8.0",
-    "react-native-reanimated": "^2.13.0",
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",

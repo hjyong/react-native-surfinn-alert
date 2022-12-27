@@ -1,6 +1,11 @@
 import {forwardRef, ReactNode, useEffect} from 'react';
 import {useAlert} from './Alert.context';
 
+export interface AlertReturnType {
+  open: () => void;
+  close: () => void;
+  remove: () => void;
+}
 export interface IAlertProps {
   children: ReactNode;
   backdrop?: boolean;
@@ -20,7 +25,7 @@ export const Alert = forwardRef(
         remove: () => remove(id),
         open: () => open(id),
         close: () => close(id),
-      };
+      } as AlertReturnType;
 
       return () => {
         remove(id);

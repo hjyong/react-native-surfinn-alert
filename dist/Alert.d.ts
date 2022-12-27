@@ -1,4 +1,9 @@
 import { ReactNode } from 'react';
+export interface AlertReturnType {
+    open: () => void;
+    close: () => void;
+    remove: () => void;
+}
 export interface IAlertProps {
     children: ReactNode;
     backdrop?: boolean;

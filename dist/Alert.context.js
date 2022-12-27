@@ -57,7 +57,6 @@ export const useAlert = () => useContext(AlertContext);
 export const AlertProvider = ({ children }) => {
     const [alerts, dispatch] = useReducer(reducer, initialAlerts);
     const add = useCallback((state) => {
-        console.log('Alert.context add', state);
         const id = uuid.v4();
         dispatch({ type: 'ADD', ...state, id });
         return id;
