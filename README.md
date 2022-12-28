@@ -1,6 +1,6 @@
 # React Native Surfinn Alert
 
-This is a custom component of React Native, a fully customizable, pop-up compatible with iOS and Android.
+This is a custom component of React Native, a fully customizable popup, compatible with iOS and Android.
 
 It just provides a pop-up container with a background, so you can implement your own view.
 ## Install
